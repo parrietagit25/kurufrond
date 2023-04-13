@@ -1,0 +1,117 @@
+/*:root {
+  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #242424;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}*/
+
+.box-shadow {
+  box-shadow: 0px 5px 5px rgba(0, 0, 0, 0.2);
+}
+
+.btn-info {
+  border-radius: 3px !important;
+}
+
+.btn-info:hover {
+  background: #c8102e !important;
+}
+
+.btn-nav:hover {
+  border: 1px solid #c8102e;
+}
+
+.css-1iibq3b-MuiButtonGroup-root .MuiButtonGroup-grouped {
+  min-width: 40px;
+  background: #092f87;
+  color: #fff;
+  border-color: 2px solid #636466;
+}
+
+.link-info:hover {
+  color: #c8102e;
+}
+
+.nav-a:hover {
+  color: #c8102e;
+}
+
+.css-1ys1yhz-MuiButtonBase-root-MuiButton-root:active {
+  border: 1px solid #c8102e;
+}
+
+.input-search {
+  background-color: #092f8799;
+  color: white;
+  padding: 0.3rem;
+  position: relative;
+  margin-top: 1rem;
+  width: 39rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+.input-searchFile {
+  background-color: #092f8799;
+  color: white;
+  padding: 0.3rem;
+  position: relative;
+  width: 50rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+
+/*Panapass*/
+.css-nrecns-MuiButtonBase-root-MuiButton-root {
+  border: 2px solid #fff !important;
+  color: #fff !important;
+  background: #092f87 !important;
+  border-radius: 10px !important;
+}
+
+.css-nrecns-MuiButtonBase-root-MuiButton-root:hover {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  background-color: #aa1a32 !important;
+  color: #fff;
+}
+
+/*RRHH*/
+.css-8enum1-MuiButtonBase-root-MuiTab-root.Mui-selected {
+  color: #c8102e !important;
+}
+
+.css-1kykj0-MuiPickersMonth-monthButton.Mui-selected {
+  color: #fff;
+  background-color: #aa1a32 !important;
+}
+
+.css-748pxa-MuiFormLabel-root-MuiInputLabel-root {
+  color: #aa1a32 !important;
+}
+
+.css-1iagjhx-MuiButtonBase-root-MuiMenuItem-root:hover {
+  color: #aa1a32 !important;
+}
+
+.checkboxTrue {
+  margin-left: 0.5rem;
+  margin-top: 0.2rem;
+  background-color: #c8102e;
+  font-size: 15px;
+  color: #fff;
+}
+
+.css-ahj2mt-MuiTypography-root {
+  font-weight: 600;
+  color: #c8102e;
+}
