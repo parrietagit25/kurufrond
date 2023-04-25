@@ -53,7 +53,6 @@ export const useAuthStore = () => {
     if (id == 498 || id == 0) {
 
       localStorage.removeItem('token');
-      //localStorage.removeItem('_id');
       return dispatch(onLogout())
     }
 

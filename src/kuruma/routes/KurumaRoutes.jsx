@@ -8,6 +8,7 @@ import HomePage from '../pages/home/HomePage'
 import AdmisionPage from '../pages/rrhh/AdmisionPage'
 import DownloadComisionesPage from '../pages/rrhh/DownloadComisionesPage'
 import UploadComisionPage from '../pages/rrhh/UploadComisionesPage'
+import User from '../pages/setting/user'
 
 const KurumaRoutes = () => {
 
@@ -29,7 +30,11 @@ const KurumaRoutes = () => {
       <Route path='/comercial/dowloadComisiones' element={ <DowloadComisionesPage/> } />
       <Route path='/comercial/configComisiones' element={ <ConfigComisiones/> } />
 
+      {/*Principal*/}
       <Route path='/*' element={ <Navigate to="/home"/> } />
+
+      {/*Setting Pages*/}
+      <Route path='/setting/user' element={ <User /> } />
 
     </Routes>
   )

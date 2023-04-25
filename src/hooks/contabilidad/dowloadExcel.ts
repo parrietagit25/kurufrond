@@ -18,24 +18,24 @@ const createTablaExcel = async(dataExcel: any, workbook: any) => {
   const headerRow = sheet.getRow(1)!;
 
   headerRow.values = [
-    //'RowNumber',
-    'Tag',
-    'Matricula',
     'UnitNumber',
+    'Matricula',
+    'Tag',
+    'FechaPase',
+    'Via',
+    'Monto',
     'RANumber',
+    'LocationCodeOut',
+    'Company',
+    'CentroCosto',
     'Rollover',
     'Driver',
     'CustomerLastname',
     'arcust',
-    'Company',
     'TrxOrigin',
     'ReferralCode',
-    'LocationCodeOut',
     'DateOut',
-    'DateIn',
-    'FechaPase',
-    'Monto',
-    'CentroCosto',
+    'DateIn'
   ];
 
   headerRow.font = { bold: true, size: 12 };
@@ -49,24 +49,24 @@ const createTablaExcel = async(dataExcel: any, workbook: any) => {
     const row = rowsToInsert[index];
 
     row.values = [
-      //item.RowNumber,
-      item.Tag,
-      item.Matricula,
       item.UnitNumber,
+      item.Matricula,
+      item.Tag,
+      item.FechaPase,
+      item.Via,
+      item.Monto,
       item.RANumber,
+      item.LocationCodeOut,
+      item.Company,
+      item.CentroCosto,
       item.Rollover,
       item.Driver,
       item.CustomerLastname,
       item.arcust,
-      item.Company,
       item.TrxOrigin,
       item.ReferralCode,
-      item.LocationCodeOut,
       item.DateOut,
-      item.DateIn,
-      item.FechaPase,
-      item.Monto,
-      item.CentroCosto,
+      item.DateIn
     ];
   }
 }

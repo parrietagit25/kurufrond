@@ -33,8 +33,6 @@ export const admission = () => {
   const createAdmission = async (data) => {
     data.operator = "I";
 
-    console.log(data);
-
     const resul = await configApi.post("/admission", data);
 
     const { status } = resul.data;
@@ -44,8 +42,6 @@ export const admission = () => {
 
   const updateAdmission = async (data) => {
     data.operator = "U";
-
-    console.log(data);
 
     const resul = await configApi.post("/admission", data);
 

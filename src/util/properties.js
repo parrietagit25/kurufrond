@@ -1,5 +1,5 @@
 export default {
-  ADMIN: "ADM",
+  ADMIN: "GERENTE-ADM",
   apro_RRHH: "APRO-RRHH",
   apro_Finanzas: "APRO-FINANZAS",
 

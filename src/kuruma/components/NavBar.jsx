@@ -27,6 +27,8 @@ function NavBar() {
   const [anchor1, setAnchor1] = useState(null);
   const [anchor2, setAnchor2] = useState(null);
   const [anchor3, setAnchor3] = useState(null);
+  const [anchor4, setAnchor4] = useState(null);
+  const [anchor5, setAnchor5] = useState(null);
   const [rrhh, setRrhh] = useState(false);
 
   const handleOpenNavMenu = (event) => {
@@ -78,6 +80,22 @@ function NavBar() {
       : setAnchor3(null);
   };
 
+  const handleOpen4 = (event) => {
+    const rol = localStorage.getItem("rol");
+
+    rol === properties.ADMIN || rol === properties.G_Rrhh
+      ? setAnchor4(event.currentTarget)
+      : setAnchor4(null);
+  };
+
+  const handleOpen5 = (event) => {
+    const rol = localStorage.getItem("rol");
+
+    rol === properties.ADMIN || rol === properties.G_Rrhh
+      ? setAnchor5(event.currentTarget)
+      : setAnchor5(null);
+  };
+
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
@@ -92,6 +110,10 @@ function NavBar() {
 
   const handleCloseUserMenu4 = () => {
     setAnchor3(null);
+  };
+
+  const handleCloseUserMenu5 = () => {
+    setAnchor4(null);
   };
 
   return (
@@ -349,6 +371,46 @@ function NavBar() {
                   }}
                 >
                   Config. Comisiones
+                </Typography>
+              </MenuItem>
+            </Menu>
+
+            <Button
+              onClick={handleOpen4}
+              className="btn-nav"
+              sx={{ my: 2, color: "white", display: "block" }}
+            >
+              CONFIGURACION
+            </Button>
+            <Menu
+              sx={{ mt: "45px", ml: "3rem" }}
+              id="menu-comercial"
+              anchorEl={anchor4}
+              anchorOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              keepMounted
+              transformOrigin={{
+                vertical: "top",
+                horizontal: "right",
+              }}
+              open={Boolean(anchor4)}
+              onClose={handleCloseUserMenu5}
+            >
+              <MenuItem onClick={handleCloseUserMenu5}>
+                <Typography
+                  textAlign="center"
+                  component="a"
+                  className="nav-a"
+                  href="/setting/user"
+                  sx={{
+                    textDecoration: "none",
+                    color: "secondary.main",
+                    fontWeight: 500,
+                  }}
+                >
+                  Usuarios
                 </Typography>
               </MenuItem>
             </Menu>

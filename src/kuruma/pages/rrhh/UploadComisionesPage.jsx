@@ -13,18 +13,25 @@ import {
   TextField,
 } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
-import { Add, Forward, Upload } from "@mui/icons-material/";
+import { Add, Upload } from "@mui/icons-material/";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import { TabContext, TabList, TabPanel } from "@mui/lab";
 import PropTypes from "prop-types";
 import { NumericFormat } from "react-number-format";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import dayjs from "dayjs";
+import ZoomInIcon from "@mui/icons-material/ZoomIn";
+import Swal from "sweetalert2";
 
 import ContainerComponents from "../../components/ContainerComponents";
 import { commission, commonServices } from "../../../hooks";
 import { columns } from "../../../util/nameColumnsTable";
 
 const UploadComisionPage = () => {
-  const { commissionDataReview, fileUploadCommission } = commission();
+  const { commissionDataReview, fileUploadCommission, searchHistory } =
+    commission();
 
   const { getDepartment, getEmployee } = commonServices();
 
@@ -36,6 +43,8 @@ const UploadComisionPage = () => {
   const [alert, setAlert] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [file, setFile] = useState([]);
+  const [dateFrom, setDateFrom] = useState(null);
+  const [dateTo, setDateTo] = useState(null);
 
   const [rows, setRows] = useState([
     {
@@ -90,13 +99,28 @@ const UploadComisionPage = () => {
   };
 
   const handleDeleteRow = (item) => {
-    const removed = rows.filter((todo) => todo.id != item.row.id);
-    setRows(removed);
+    for (let i of item) {
+      const removed = rows.filter((todo) => todo.id != i);
+
+      Swal.fire({
+        title: "Deseas eliminar este registro?",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#092f87",
+        cancelButtonColor: "#c8102e",
+        confirmButtonText: "Si, eliminar!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          setRows(removed);
+
+          Swal.fire("Deleted!", "Operacion realizada con exito.", "success");
+        }
+      });
+    }
   };
 
   const AddtoList = () => {
     if (!validateForm()) {
-      console.log(rows.length);
       if (rows.length >= 1) {
         let flag = false;
         rows.forEach((item) => {
@@ -209,6 +233,35 @@ const UploadComisionPage = () => {
     await fileUploadCommission(file);
   };
 
+  //todo: busqueda de historial
+  const search = async () => {
+    if (dateFrom != undefined && dateTo != undefined) {
+      if (formatDate(dateFrom) <= formatDate(dateTo)) {
+        const data = {
+          operator: "S-D",
+          departmentName: localStorage.getItem("department"),
+          fromDate: formatDate(dateFrom),
+          toDate: formatDate(dateTo),
+        };
+
+        await searchHistory(data);
+
+        setDateFrom(null);
+        setDateTo(null);
+      } else {
+        messageError("Error, fechas no validas...");
+        //setHistoryModal(false);
+      }
+    } else {
+      messageError("Error, se debe seleccionar fecha desde y hasta...");
+      //setHistoryModal(false);
+    }
+  };
+
+  const formatDate = (date) => {
+    return dayjs(date);
+  };
+
   return (
     <ContainerComponents
       color="#636466"
@@ -317,7 +370,10 @@ const UploadComisionPage = () => {
                         })}
                       </Select>
                     </FormControl>
-                    <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+                    <FormControl
+                      sx={{ m: 1, width: "25ch" }}
+                      variant="outlined"
+                    >
                       <TextField
                         sx={{ mt: 1, mb: 1 }}
                         label="Comisión:"
@@ -331,7 +387,10 @@ const UploadComisionPage = () => {
                         variant="standard"
                       />
                     </FormControl>
-                    <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+                    <FormControl
+                      sx={{ m: 1, width: "25ch" }}
+                      variant="outlined"
+                    >
                       <TextField
                         sx={{ mt: 1, mb: 1 }}
                         label="Bonificación:"
@@ -345,7 +404,10 @@ const UploadComisionPage = () => {
                         variant="standard"
                       />
                     </FormControl>
-                    <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+                    <FormControl
+                      sx={{ m: 1, width: "25ch" }}
+                      variant="outlined"
+                    >
                       <TextField
                         sx={{ mt: 1, mb: 1 }}
                         label="Honorarios:"
@@ -359,7 +421,10 @@ const UploadComisionPage = () => {
                         variant="standard"
                       />
                     </FormControl>
-                    <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
+                    <FormControl
+                      sx={{ m: 1, width: "25ch" }}
+                      variant="outlined"
+                    >
                       <TextField
                         sx={{ mt: 1, mb: 1 }}
                         label="Vale General:"
@@ -373,7 +438,10 @@ const UploadComisionPage = () => {
                         variant="standard"
                       />
                     </FormControl>
-                    <FormControl sx={{ m: 2, width: '25ch' }} variant="outlined">
+                    <FormControl
+                      sx={{ m: 2, width: "25ch" }}
+                      variant="outlined"
+                    >
                       <TextField
                         label="Profuturo:"
                         value={amount.profuturo}
@@ -386,10 +454,14 @@ const UploadComisionPage = () => {
                         variant="standard"
                       />
                     </FormControl>
-                    <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                    </FormControl>
-
-                    <FormControl sx={{ m: 1, width: '25ch', mt: 2 }} variant="outlined">
+                    <FormControl
+                      sx={{ m: 1, width: "25ch" }}
+                      variant="outlined"
+                    ></FormControl>
+                    <FormControl
+                      sx={{ m: 1, width: "25ch", mt: 2 }}
+                      variant="outlined"
+                    >
                       <Button
                         variant="contained"
                         sx={{ mb: 2 }}
@@ -402,7 +474,10 @@ const UploadComisionPage = () => {
                         AGREGAR
                       </Button>
                     </FormControl>
-                    <FormControl sx={{ m: 1, width: '25ch', mt: 2 }} variant="outlined">
+                    <FormControl
+                      sx={{ m: 1, width: "25ch", mt: 2 }}
+                      variant="outlined"
+                    >
                       <Button
                         variant="contained"
                         className="btn-info"
@@ -418,7 +493,8 @@ const UploadComisionPage = () => {
                   </Box>
                   <Box
                     sx={{
-                      height: 400, width: "100%" 
+                      height: 400,
+                      width: "100%",
                     }}
                   >
                     <DataGrid
@@ -432,12 +508,63 @@ const UploadComisionPage = () => {
                         },
                       }}
                       pageSizeOptions={[5]}
-                      onRowClick={(e) => {
+                      checkboxSelection
+                      disableRowSelectionOnClick
+                      onRowSelectionModelChange={(e) => {
                         handleDeleteRow(e);
                       }}
                     />
                   </Box>
-                 
+                </TabPanel>
+              </Grid>
+
+              <Grid item xs={12}>
+                <TabPanel value="3">
+                  <Box
+                    sx={{
+                      display: "flex",
+                      flexWrap: "wrap",
+                      justifyContent: "center",
+                    }}
+                  >
+                    <FormControl sx={{ m: 1, minWidth: 300, mt: 2 }}>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                          sx={{ m: 1 }}
+                          label={"Seleccione la fecha desde:"}
+                          value={dateFrom}
+                          onChange={(newValue) => setDateFrom(newValue)}
+                        />
+                      </LocalizationProvider>
+                    </FormControl>
+
+                    <FormControl sx={{ m: 1, minWidth: 300, mt: 2 }}>
+                      <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                          sx={{ m: 1 }}
+                          label={"Seleccione la fecha hasta:"}
+                          value={dateTo}
+                          onChange={(newValue) => setDateTo(newValue)}
+                        />
+                      </LocalizationProvider>
+                    </FormControl>
+
+                    <FormControl
+                      sx={{ m: 1, width: "15ch", mt: 4 }}
+                      variant="outlined"
+                    >
+                      <Button
+                        className="btn-info"
+                        endIcon={<ZoomInIcon />}
+                        onClick={() => {
+                          search();
+                        }}
+                        variant="contained"
+                      >
+                        Buscar
+                      </Button>
+                    </FormControl>
+                  </Box>
                 </TabPanel>
               </Grid>
             </TabContext>

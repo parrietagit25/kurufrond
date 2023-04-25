@@ -131,16 +131,12 @@ export const commission = () => {
     }
   };
 
-  const searchHistory = async (fromDate, toDate) => {
-
-    const data = {
-      operator: 'S',
-      departmentName: '',
-      fromDate: fromDate,
-      toDate: toDate,
-    };
+  const searchHistory = async (data) => {
 
     try {
+
+      console.log('searchHistory');
+
       const resul = await configApi.post("/historical-report", data);
 
       const { status, listData } = resul.data;
