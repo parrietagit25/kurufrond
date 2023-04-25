@@ -15,8 +15,6 @@ export const useAuthStore = () => {
 
       const response = await configApi.post("/login", data);
 
-      console.log(response.data.status);
-
       localStorage.setItem("token", response.data.data.token);
       localStorage.setItem('rol', response.data.data.rol)
       localStorage.setItem('email', response.data.data.email)
