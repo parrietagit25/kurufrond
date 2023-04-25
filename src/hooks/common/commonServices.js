@@ -84,6 +84,63 @@ export const commonServices = () => {
       }, 10);
     }
   };
+  const getClasesComercial = async () => {
+    try {
+      const resul = await configApi.get("/get-clases-comercial");
+
+      const { status, data } = resul.data;
+
+      if (status.id == 200) {
+        return data;
+      } else {
+        messageError(status.name);
+      }
+    } catch (error) {
+      dispatch(onLogout(error.code));
+      setTimeout(() => {
+        dispatch(clearErrorMessage());
+      }, 10);
+    }
+  };
+
+  const getCostCenterFee = async () => {
+    try {
+      const resul = await configApi.get("/get-cost-center-fee");
+
+      const { status, data } = resul.data;
+
+      if (status.id == 200) {
+        return data;
+      } else {
+        messageError(status.name);
+      }
+    } catch (error) {
+      dispatch(onLogout(error.code));
+      setTimeout(() => {
+        dispatch(clearErrorMessage());
+      }, 10);
+    }
+  };
+
+  const getRoles = async () => {
+    try {
+      
+      const resul = await configApi.get("/get-user-roles");
+
+      const { status, data } = resul.data;
+
+      if (status.id == 200) {
+        return data;
+      } else {
+        messageError(status.name);
+      }
+    } catch (error) {
+      dispatch(onLogout(error.code));
+      setTimeout(() => {
+        dispatch(clearErrorMessage());
+      }, 10);
+    }
+  }
 
   return {
     //* Propiedades
@@ -93,5 +150,8 @@ export const commonServices = () => {
     getAllApartments,
     getEmployee,
     getCustomerAccount,
+    getClasesComercial,
+    getCostCenterFee,
+    getRoles
   };
 };

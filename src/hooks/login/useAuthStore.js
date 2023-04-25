@@ -15,8 +15,6 @@ export const useAuthStore = () => {
 
       const response = await configApi.post("/login", data);
 
-      console.log(response.data.status);
-
       localStorage.setItem("token", response.data.data.token);
       localStorage.setItem('rol', response.data.data.rol)
       localStorage.setItem('email', response.data.data.email)
@@ -53,7 +51,6 @@ export const useAuthStore = () => {
     if (id == 498 || id == 0) {
 
       localStorage.removeItem('token');
-      //localStorage.removeItem('_id');
       return dispatch(onLogout())
     }
 

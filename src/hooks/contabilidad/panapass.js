@@ -3,7 +3,7 @@ import { read, utils } from 'xlsx';
 
 import configApi from "../../api/configApi";
 import { onLogout, clearErrorMessage } from "../../store/auth";
-import { dowloadExcel, processLoadFile, messages } from "..";
+import { dowloadExcel, messages } from "..";
 
 export const panapass = () => {
   const dispatch = useDispatch();
@@ -80,10 +80,26 @@ export const panapass = () => {
 
       const { data, status } = result.data;
 
+      const listRollover = []
+
       if (status.id == 200) {
-        console.log('processMatchPanapass');
-        dowloadExcel(data)
-        messageSuccess(status.name)
+        if (flagRollover) {
+
+          for ( let item of data ) {
+
+            if (item.Rollover == '1') {
+              listRollover.push(item)
+            }
+          }
+
+          dowloadExcel(listRollover)
+          messageSuccess(status.name)
+
+        } else {
+          dowloadExcel(data)
+          messageSuccess(status.name)
+        }
+        
       } else {
         messageError(status.name)
       }
@@ -109,11 +125,7 @@ export const panapass = () => {
 
         const data = utils.sheet_to_json(workbook.Sheets['CARGA']);
 
-        //const jsonData = ;
-
         const dataList = JSON.parse(JSON.stringify(data));
-
-        console.log(dataList);
 
         const resul = await configApi.post("/load-to-intelisis/", dataList);
 

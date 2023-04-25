@@ -4,10 +4,8 @@ import {
   Alert,
   Box,
   Button,
-  ButtonGroup,
   Card,
   FormControl,
-  Grid,
   InputAdornment,
   InputLabel,
   MenuItem,
@@ -27,15 +25,17 @@ import ContainerComponents from "../../components/ContainerComponents";
 import { columnsCommission } from "../../../util/nameColumnsTable";
 import { commonServices, commission, messages } from "../../../hooks";
 import ProgressModal from "../../components/ProgressModal";
-import WorkHistoryIcon from '@mui/icons-material/WorkHistory';
-
+import WorkHistoryIcon from "@mui/icons-material/WorkHistory";
 
 const DownloadComisionesPage = () => {
-
-  const { messageError } = messages()
+  const { messageError } = messages();
   const { getAllApartments } = commonServices();
-  const { getCommissionByDate, sendFilePayday, totalCommissionReport, searchHistory } =
-    commission();
+  const {
+    getCommissionByDate,
+    sendFilePayday,
+    totalCommissionReport,
+    searchHistory,
+  } = commission();
 
   const [dateFrom, setDateFrom] = useState(null);
   const [dateTo, setDateTo] = useState(null);
@@ -44,7 +44,7 @@ const DownloadComisionesPage = () => {
   const [dateValues, setDateValues] = useState(null);
   const [grandTotal, setGrandTotal] = useState(0);
   const [modal, setModal] = useState(false);
-  const [historyModal, setHistoryModal] = useState(false)
+  const [historyModal, setHistoryModal] = useState(false);
   const [alert, setAlert] = useState(false);
   const [disabled, setDisabled] = useState(true);
   const [rows, setRows] = useState([
@@ -66,7 +66,6 @@ const DownloadComisionesPage = () => {
   useEffect(() => {
     async function fetchData() {
       setListDepartament(await getAllApartments());
-
     }
     fetchData();
   }, []);
@@ -124,27 +123,31 @@ const DownloadComisionesPage = () => {
     setModal(false);
   };
 
-
   const search = async () => {
     if (dateFrom != undefined && dateTo != undefined) {
       if (formatDate(dateFrom) <= formatDate(dateTo)) {
+        setHistoryModal(true);
 
-        setHistoryModal(true)
-        
-       await searchHistory(formatDate(dateFrom), formatDate(dateTo));
+        const data = {
+          operator: 'S',
+          departmentName: '',
+          fromDate: formatDate(dateFrom),
+          toDate: formatDate(dateTo),
+        }
 
-       setHistoryModal(false)
+        await searchHistory(data);
 
-       setDateFrom(null)
-       setDateTo(null)
+        setHistoryModal(false);
 
+        setDateFrom(null);
+        setDateTo(null);
       } else {
         messageError("Error, fechas no validas...");
-        setHistoryModal(false)
+        setHistoryModal(false);
       }
     } else {
       messageError("Error, se debe seleccionar fecha desde y hasta...");
-      setHistoryModal(false)
+      setHistoryModal(false);
     }
   };
 
@@ -152,7 +155,7 @@ const DownloadComisionesPage = () => {
     return dayjs(date);
   };
 
-  const handleClose = () => setHistoryModal(false)
+  const handleClose = () => setHistoryModal(false);
 
   return (
     <ContainerComponents
@@ -171,183 +174,178 @@ const DownloadComisionesPage = () => {
           <Box
             sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
           >
+            <FormControl sx={{ m: 1, minWidth: 200, mt: 2 }}>
+              <LocalizationProvider dateAdapter={AdapterDayjs}>
+                <DatePicker
+                  sx={{ m: 1 }}
+                  label={"Seleccione la fecha"}
+                  views={["month", "year"]}
+                  value={dateValues}
+                  onChange={(newValue) => setDateValues(newValue)}
+                />
+              </LocalizationProvider>
+            </FormControl>
 
-          <FormControl sx={{ m: 1, minWidth: 200, mt: 2 }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                sx={{ m: 1 }}
-                label={"Seleccione la fecha"}
-                views={["month", "year"]}
-                value={dateValues}
-                onChange={(newValue) => setDateValues(newValue)}
-              />
-            </LocalizationProvider>
-          </FormControl>
+            <FormControl sx={{ m: 1, minWidth: 200, mt: 3 }}>
+              <InputLabel>Departamento</InputLabel>
+              <Select
+                id="grouped-select"
+                label="Departamento"
+                value={departament}
+                onChange={changeDepartament}
+                variant="outlined"
+              >
+                {listDepartament.map((item, index) => {
+                  return (
+                    <MenuItem value={item.name} key={index}>
+                      {item.name}
+                    </MenuItem>
+                  );
+                })}
+              </Select>
+            </FormControl>
+            <FormControl sx={{ m: 1, width: "15ch", mt: 4 }} variant="outlined">
+              <Button
+                className="btn-info"
+                endIcon={<ZoomInIcon />}
+                onClick={() => {
+                  getCommission();
+                }}
+                variant="contained"
+              >
+                Buscar
+              </Button>
+            </FormControl>
 
-          <FormControl sx={{ m: 1, minWidth: 200, mt: 3 }}>
-            <InputLabel>Departamento</InputLabel>
-            <Select
-              id="grouped-select"
-              label="Departamento"
-              value={departament}
-              onChange={changeDepartament}
-              variant="outlined"
-            >
-              {listDepartament.map((item, index) => {
-                return (
-                  <MenuItem value={item.name} key={index}>
-                    {item.name}
-                  </MenuItem>
-                );
-              })}
-            </Select>
-          </FormControl>
-          <FormControl
-            sx={{ m: 1, width: "15ch", mt: 4 }}
-            variant="outlined"
-          >
-            <Button
-              className="btn-info"
-              endIcon={<ZoomInIcon />}
-              onClick={() => {
-                getCommission();
-              }}
-              variant="contained"
-            >
-              Buscar
-            </Button>
-          </FormControl>
+            <FormControl sx={{ m: 1, width: "15ch", mt: 3 }} variant="outlined">
+              <Button
+                className="btn-info"
+                endIcon={<MarkEmailReadIcon />}
+                disabled={disabled}
+                onClick={() => {
+                  downloadFilePayday();
+                }}
+                variant="contained"
+              >
+                Reporte Payday
+              </Button>
+            </FormControl>
+            <FormControl sx={{ m: 1, width: "15ch", mt: 3 }} variant="outlined">
+              <Button
+                className="btn-info"
+                endIcon={<SaveAltIcon />}
+                disabled={disabled}
+                onClick={() => {
+                  downloadTotalCommission();
+                }}
+                variant="contained"
+              >
+                Total Depart...
+              </Button>
+            </FormControl>
+            <FormControl sx={{ m: 1, width: "15ch", mt: 3 }} variant="outlined">
+              <Button
+                className="btn-info"
+                endIcon={<WorkHistoryIcon />}
+                variant="contained"
+                onClick={() => {
+                  setHistoryModal(true);
+                }}
+              >
+                Reporte Historico
+              </Button>
+            </FormControl>
 
-          <FormControl
-            sx={{ m: 1, width: "15ch", mt: 3 }}
-            variant="outlined"
-          >
-            <Button
-              className="btn-info"
-              endIcon={<MarkEmailReadIcon />}
-              disabled={disabled}
-              onClick={() => {
-                downloadFilePayday();
-              }}
-              variant="contained"
-            >
-              Reporte Payday
-            </Button>
-          </FormControl>
-          <FormControl
-            sx={{ m: 1, width: "15ch", mt: 3 }}
-            variant="outlined"
-          >
-            <Button
-              className="btn-info"
-              endIcon={<SaveAltIcon />}
-              disabled={disabled}
-              onClick={() => {
-                downloadTotalCommission();
-              }}
-              variant="contained"
-            >
-              Total Depart...
-            </Button>
-          </FormControl>
-          <FormControl
-            sx={{ m: 1, width: "15ch", mt: 3 }}
-            variant="outlined"
-          >
-            <Button
-              className="btn-info"
-              endIcon={<WorkHistoryIcon />}
-              variant="contained"
-              onClick={() => {
-                 setHistoryModal(true)
-              }}
-            >
-              Reporte Historico
-            </Button>
-          </FormControl>
-         
-          <Box sx={{ height: 450, width: "392%", m: 1 }}>
-            <DataGrid
-              rows={rows}
-              columns={columnsCommission}
-              initialState={{
-                pagination: {
-                  paginationModel: {
-                    pageSize: 10,
+            <Box sx={{ height: 450, width: "392%", m: 1 }}>
+              <DataGrid
+                rows={rows}
+                columns={columnsCommission}
+                initialState={{
+                  pagination: {
+                    paginationModel: {
+                      pageSize: 10,
+                    },
                   },
-                },
-              }}
-              pageSizeOptions={[10]}
-            />
-          </Box>
+                }}
+                pageSizeOptions={[10]}
+              />
+            </Box>
 
-          <FormControl sx={{ mb: 1, mt: 2 }}>
-              <InputLabel htmlFor="outlined-adornment-amount">Total General:</InputLabel>
+            <FormControl sx={{ mb: 1, mt: 2 }}>
+              <InputLabel htmlFor="outlined-adornment-amount">
+                Total General:
+              </InputLabel>
               <OutlinedInput
                 id="outlined-adornment-amount"
-                startAdornment={<InputAdornment position="start">$</InputAdornment>}
+                startAdornment={
+                  <InputAdornment position="start">$</InputAdornment>
+                }
                 label="Total General:"
                 value={grandTotal}
                 disabled
               />
             </FormControl>
-
-            </Box>
+          </Box>
         </Card>
       </form>
       <ProgressModal open={modal} />
-      
 
       <Modal
-      open={historyModal}
-      onClose={handleClose}
-      aria-labelledby="modal-modal-title"
-      aria-describedby="modal-modal-description"
-    >
-      <Box sx={style}>
-      <Card>
-        <Box
-          sx={{ display: "flex", flexWrap: "wrap", justifyContent: "center" }}
-        >
-          <FormControl sx={{ m: 1, minWidth: 300, mt: 2 }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                sx={{ m: 1 }}
-                label={"Seleccione la fecha desde:"}
-                value={dateFrom}
-                onChange={(newValue) => setDateFrom(newValue)}
-              />
-            </LocalizationProvider>
-          </FormControl>
-
-          <FormControl sx={{ m: 1, minWidth: 300, mt: 2 }}>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-              <DatePicker
-                sx={{ m: 1 }}
-                label={"Seleccione la fecha hasta:"}
-                value={dateTo}
-                onChange={(newValue) => setDateTo(newValue)}
-              />
-            </LocalizationProvider>
-          </FormControl>
-
-          <FormControl sx={{ m: 1, width: "15ch", mt: 4 }} variant="outlined">
-            <Button
-              className="btn-info"
-              endIcon={<ZoomInIcon />}
-              onClick={() => {
-                search();
+        open={historyModal}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <Card>
+            <Box
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                justifyContent: "center",
               }}
-              variant="contained"
             >
-              Buscar
-            </Button>
-          </FormControl>
-        </Box>
-      </Card>
-      </Box>
-    </Modal>
+              <FormControl sx={{ m: 1, minWidth: 300, mt: 2 }}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    sx={{ m: 1 }}
+                    label={"Seleccione la fecha desde:"}
+                    value={dateFrom}
+                    onChange={(newValue) => setDateFrom(newValue)}
+                  />
+                </LocalizationProvider>
+              </FormControl>
 
+              <FormControl sx={{ m: 1, minWidth: 300, mt: 2 }}>
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                  <DatePicker
+                    sx={{ m: 1 }}
+                    label={"Seleccione la fecha hasta:"}
+                    value={dateTo}
+                    onChange={(newValue) => setDateTo(newValue)}
+                  />
+                </LocalizationProvider>
+              </FormControl>
+
+              <FormControl
+                sx={{ m: 1, width: "15ch", mt: 4 }}
+                variant="outlined"
+              >
+                <Button
+                  className="btn-info"
+                  endIcon={<ZoomInIcon />}
+                  onClick={() => {
+                    search();
+                  }}
+                  variant="contained"
+                >
+                  Buscar
+                </Button>
+              </FormControl>
+            </Box>
+          </Card>
+        </Box>
+      </Modal>
     </ContainerComponents>
   );
 };

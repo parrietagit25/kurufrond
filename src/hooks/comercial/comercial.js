@@ -12,16 +12,15 @@ export const comercial = () => {
 
   const reportCorp = async (data) => {
     try {
-
       const resul = await configApi.post("/download-report-corp", data);
 
       const { status } = resul.data;
 
       if (status.id == 200) {
-        dowloadExcelComercial(resul.data.data)
-        messageSuccess(status.name)
+        dowloadExcelComercial(resul.data.data);
+        messageSuccess(status.name);
       } else {
-        messageError(status.name)
+        messageError(status.name);
       }
     } catch (error) {
       dispatch(onLogout(error.code));
@@ -44,15 +43,13 @@ export const comercial = () => {
       status.id == 200
         ? messageSuccess(status.name)
         : messageError(status.name);
-
     } catch (error) {
-      messageError('Registro invalido...');
+      messageError("Registro invalido...");
     }
-  }
+  };
 
   const getCustomerCategory = async (data) => {
     try {
-
       data.operator = "S";
 
       const resul = await configApi.post("/cat-cte-fee", data);
@@ -74,7 +71,6 @@ export const comercial = () => {
 
   const deleteCustomerCategory = async (data) => {
     try {
-
       data.operator = "D";
 
       const resul = await configApi.post("/cat-cte-fee", data);
@@ -90,7 +86,87 @@ export const comercial = () => {
         dispatch(clearErrorMessage());
       }, 10);
     }
-  }
+  };
+
+  const getVehicleRate = async () => {
+    try {
+      const data = {
+        operator: "S",
+      };
+
+      const resul = await configApi.post("/vehicle-rate", data);
+
+      const { status } = resul.data;
+
+      if (status.id == 200) {
+        return resul.data.data;
+      } else {
+        messageError(status.name);
+      }
+    } catch (error) {
+      dispatch(onLogout(error.code));
+      setTimeout(() => {
+        dispatch(clearErrorMessage());
+      }, 10);
+    }
+  };
+
+  const vehicleRate = async (dataTab3) => {
+    try {
+      const resul = await configApi.post("/vehicle-rate", dataTab3);
+
+      const { status } = resul.data;
+
+      if (status.id == 200) {
+        messageSuccess(status.name);
+      } else {
+        messageError(status.name);
+      }
+    } catch (error) {
+      dispatch(onLogout(error.code));
+      setTimeout(() => {
+        dispatch(clearErrorMessage());
+      }, 10);
+    }
+  };
+
+  const deleteVehicleRate = async (data) => {
+    try {
+      data.operator = "D";
+
+      const resul = await configApi.post("/vehicle-rate", data);
+
+      const { status } = resul.data;
+
+      status.id == 200
+        ? messageSuccess(status.name)
+        : messageError(status.name);
+    } catch (error) {
+      dispatch(onLogout(error.code));
+      setTimeout(() => {
+        dispatch(clearErrorMessage());
+      }, 10);
+    }
+  };
+
+  const costCenterFee = async (data) => {
+    try {
+      const resul = await configApi.post("/cost-center-fee", data);
+
+      const { status } = resul.data;
+
+      if (status.id == 200) {
+        return resul.data.data;
+      } else {
+        messageError(status.name);
+      }
+    } catch (error) {
+      dispatch(onLogout(error.code));
+      setTimeout(() => {
+        dispatch(clearErrorMessage());
+      }, 10);
+    }
+  };
 
   return {
     //* Propiedades
@@ -99,6 +175,10 @@ export const comercial = () => {
     reportCorp,
     addCustomerCategory,
     getCustomerCategory,
-    deleteCustomerCategory
+    deleteCustomerCategory,
+    getVehicleRate,
+    vehicleRate,
+    deleteVehicleRate,
+    costCenterFee,
   };
 };

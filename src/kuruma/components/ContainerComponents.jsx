@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography } from "@mui/material";
+import { Grid } from "@mui/material";
 import KurumaLayout from "../layout/KurumaLayout";
 
 const Container = ({ children, color = "", width, title, subTitle }) => {
