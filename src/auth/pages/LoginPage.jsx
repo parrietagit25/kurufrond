@@ -45,7 +45,6 @@ const LoginPage = () => {
   useEffect(() => {
 
     if ( errorMessage !== undefined ) {
-      console.log(errorMessage);
       Swal.fire('Oops...', errorMessage, 'error')
     }
    

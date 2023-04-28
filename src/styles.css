@@ -25,6 +25,10 @@
   color: #c8102e;
 }
 
+.link-nav:hover {
+  color: #fff;
+}
+
 .nav-a:hover {
   color: #c8102e;
 }

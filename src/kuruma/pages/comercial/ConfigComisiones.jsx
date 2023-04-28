@@ -180,7 +180,6 @@ const ConfigComisiones = () => {
         });
 
         if (flag) {
-          console.log(flag);
           messageWarning("Centro de costo ya existe en la lista.");
           clear();
         } else {

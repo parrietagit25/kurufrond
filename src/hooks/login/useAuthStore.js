@@ -29,7 +29,6 @@ export const useAuthStore = () => {
         })
       );
     } catch (error) {
-      console.log({ error });
       dispatch(onLogout(error.code))
       setTimeout(() => {
         dispatch(clearErrorMessage())

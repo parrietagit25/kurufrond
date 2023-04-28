@@ -13,7 +13,6 @@ export const commission = () => {
 
   const commissionDataReview = async (data) => {
     try {
-      console.log(data);
 
       const resul = await configApi.post("/commissionDataReview", data);
 
@@ -48,8 +47,6 @@ export const commission = () => {
           flag: true,
           employees: listEmployee,
         };
-
-        console.log("resul1");
 
         const resul = await configApi.post("/commissionDataReview", data);
 
@@ -134,8 +131,6 @@ export const commission = () => {
   const searchHistory = async (data) => {
 
     try {
-
-      console.log('searchHistory');
 
       const resul = await configApi.post("/historical-report", data);
 
