@@ -9,7 +9,9 @@ import {
   IconButton,
   Typography,
   Menu,
+  Link,
 } from "@mui/material";
+import { Link as RouterLink } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import AdbIcon from "@mui/icons-material/Adb";
 import DirectionsCarIcon from "@mui/icons-material/DirectionsCar";
@@ -180,11 +182,8 @@ function NavBar() {
           </Box>
 
           <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
-          <Typography
+          <Link
             variant="h5"
-            noWrap
-            component="a"
-            href="/home"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -193,18 +192,32 @@ function NavBar() {
               color: "inherit",
               textDecoration: "none",
             }}
+            component={RouterLink}
+            underline="none"
+            className="link-info"
+            to="/home"
           >
             KURUMA
-          </Typography>
+          </Link>
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Button
               component="a"
-              href="/home"
               className="btn-nav"
               sx={{ my: 2, color: "white", display: "block" }}
             >
-              INICIO
+              <Link
+                sx={{
+                  color: "white",
+                  fontWeight: 500,
+                }}
+                component={RouterLink}
+                underline="none"
+                className="link-nav"
+                to="/home"
+              >
+                INICIO
+              </Link>
             </Button>
 
             <Button
@@ -231,19 +244,19 @@ function NavBar() {
               onClose={handleClose1}
             >
               <MenuItem onClick={handleClose1}>
-                <Typography
-                  textAlign="center"
-                  component="a"
-                  className="nav-a"
-                  href="/finanzas/panapass"
+                <Link
                   sx={{
-                    textDecoration: "none",
                     color: "secondary.main",
                     fontWeight: 500,
                   }}
+                  component={RouterLink}
+                  underline="none"
+                  className="link-info"
+                  //color="inherit"
+                  to="/finanzas/panapass"
                 >
                   Panapass
-                </Typography>
+                </Link>
               </MenuItem>
             </Menu>
 
@@ -271,51 +284,51 @@ function NavBar() {
               onClose={handleClose2}
             >
               <MenuItem onClick={handleClose2}>
-                <Typography
-                  textAlign="center"
-                  component="a"
-                  className="nav-a"
-                  href="/rrhh/uploadComisiones"
+                <Link
                   sx={{
-                    textDecoration: "none",
                     color: "secondary.main",
                     fontWeight: 500,
                   }}
+                  component={RouterLink}
+                  underline="none"
+                  className="link-info"
+                  //color="inherit"
+                  to="/rrhh/uploadComisiones"
                 >
                   Cargar Comisiones
-                </Typography>
+                </Link>
               </MenuItem>
 
               <MenuItem onClick={handleClose2} disabled={!rrhh}>
-                <Typography
-                  textAlign="center"
-                  component="a"
-                  className="nav-a"
-                  href="/rrhh/dowloadComisiones"
+                <Link
                   sx={{
-                    textDecoration: "none",
                     color: "secondary.main",
                     fontWeight: 500,
                   }}
+                  component={RouterLink}
+                  underline="none"
+                  className="link-info"
+                  //color="inherit"
+                  to="/rrhh/dowloadComisiones"
                 >
                   Descargar Comisiones
-                </Typography>
+                </Link>
               </MenuItem>
 
               <MenuItem onClick={handleClose2} disabled={!rrhh}>
-                <Typography
-                  textAlign="center"
-                  component="a"
-                  className="nav-a"
-                  href="/rrhh/admision"
+                <Link
                   sx={{
-                    textDecoration: "none",
                     color: "secondary.main",
                     fontWeight: 500,
                   }}
+                  component={RouterLink}
+                  underline="none"
+                  className="link-info"
+                  //color="inherit"
+                  to="/rrhh/admision"
                 >
                   Admision
-                </Typography>
+                </Link>
               </MenuItem>
             </Menu>
 
@@ -343,35 +356,33 @@ function NavBar() {
               onClose={handleCloseUserMenu4}
             >
               <MenuItem onClick={handleCloseUserMenu4}>
-                <Typography
-                  textAlign="center"
-                  component="a"
-                  className="nav-a"
-                  href="/comercial/dowloadComisiones"
+                <Link
                   sx={{
-                    textDecoration: "none",
                     color: "secondary.main",
                     fontWeight: 500,
                   }}
+                  component={RouterLink}
+                  underline="none"
+                  className="link-info"
+                  to="/comercial/dowloadComisiones"
                 >
                   Descargar Comisiones
-                </Typography>
+                </Link>
               </MenuItem>
 
               <MenuItem onClick={handleCloseUserMenu4}>
-                <Typography
-                  textAlign="center"
-                  component="a"
-                  className="nav-a"
-                  href="/comercial/configComisiones"
+                <Link
                   sx={{
-                    textDecoration: "none",
                     color: "secondary.main",
                     fontWeight: 500,
                   }}
+                  component={RouterLink}
+                  underline="none"
+                  className="link-info"
+                  to="/comercial/configComisiones"
                 >
                   Config. Comisiones
-                </Typography>
+                </Link>
               </MenuItem>
             </Menu>
 
@@ -399,19 +410,18 @@ function NavBar() {
               onClose={handleCloseUserMenu5}
             >
               <MenuItem onClick={handleCloseUserMenu5}>
-                <Typography
-                  textAlign="center"
-                  component="a"
-                  className="nav-a"
-                  href="/setting/user"
+                <Link
                   sx={{
-                    textDecoration: "none",
                     color: "secondary.main",
                     fontWeight: 500,
                   }}
+                  component={RouterLink}
+                  underline="none"
+                  className="link-info"
+                  to="/setting/user"
                 >
                   Usuarios
-                </Typography>
+                </Link>
               </MenuItem>
             </Menu>
           </Box>

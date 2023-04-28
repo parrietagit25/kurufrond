@@ -19,7 +19,7 @@ const KurumaRoutes = () => {
       <Route path='/home' element={ <HomePage/> } />
 
       {/*Finanzas Pages*/}
-      <Route path='/finanzas/panapass' element={ <PanapassPage/> } />
+      <Route path="/finanzas/panapass" element={ <PanapassPage/> } />
 
       {/*RRHH Pages*/}
       <Route path='/rrhh/uploadComisiones' element={ <UploadComisionPage/> } />

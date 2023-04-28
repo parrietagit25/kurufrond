@@ -36,8 +36,6 @@ export const comercial = () => {
 
       const resul = await configApi.post("/cat-cte-fee", data);
 
-      console.log(resul);
-
       const { status } = resul.data;
 
       status.id == 200

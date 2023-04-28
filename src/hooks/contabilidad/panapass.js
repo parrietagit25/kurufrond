@@ -19,8 +19,6 @@ export const panapass = () => {
       if (status.id == 200) {
         const resUploadFiles = await configApi.post("/upload-files");
 
-        console.log(resUploadFiles.data.status.id);
-
         if (resUploadFiles.data.status.id == 200) {
           processENA();
         }

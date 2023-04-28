@@ -120,7 +120,7 @@ const AdmisionPage = () => {
         settlementHistory: result.settlementHistory,
         debt: result.debt,
       });
-  
+
       setChecked(result.status);
       setDateBirth(formatDate(result.dateBirth));
       setDateEntry(formatDate(result.dateEntry));
@@ -137,11 +137,7 @@ const AdmisionPage = () => {
     data.dateEntry = formatDate(dateEntry);
     data.contractExpiration = formatDate(contractExpiration);
 
-    console.log("flagSearch");
-    console.log(flagSearch);
-
     flagSearch ? await updateAdmission(data) : await createAdmission(data);
-
     clear();
     setTab("1");
   };

@@ -129,7 +129,6 @@ const UploadComisionPage = () => {
           }
         });
         if (flag) {
-          console.log(flag);
           getAlert();
         } else {
           mapperData();
@@ -222,8 +221,6 @@ const UploadComisionPage = () => {
 
   //todo: carga de archivo
   const fileSelected = (event) => {
-    console.log("fileSelected");
-
     setFile(event.target.files[0]);
 
     setDisabled(false);
