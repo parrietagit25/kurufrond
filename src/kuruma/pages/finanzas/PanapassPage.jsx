@@ -1,7 +1,7 @@
-import UploadFileIcon from '@mui/icons-material/UploadFile';
-import JoinRightIcon from '@mui/icons-material/JoinRight';
-import SaveAltIcon from '@mui/icons-material/SaveAlt';
-import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import UploadFileIcon from "@mui/icons-material/UploadFile";
+import JoinRightIcon from "@mui/icons-material/JoinRight";
+import SaveAltIcon from "@mui/icons-material/SaveAlt";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Button, ButtonGroup, Card, CardHeader, Grid } from "@mui/material";
 
 import { useState } from "react";
@@ -11,17 +11,17 @@ import { panapass, messages } from "../../../hooks";
 import ProgressModal from "../../components/ProgressModal";
 
 const PanapassPage = () => {
-  const { uploadFiles, processMatchPanapass, loadToIntelisis } = panapass();
+  const { /*uploadFiles,*/ processMatchPanapass, loadToIntelisis } = panapass();
 
   const [modal, setModal] = useState(false);
   const [file, setFile] = useState([]);
   const [disabled, setDisabled] = useState(true);
 
-  const onSubmit = async () => {
+  /*const onSubmit = async () => {
     setModal(true);
     await uploadFiles();
     setModal(false);
-  };
+  };*/
 
   const processMatch = async (flagRollover) => {
     setModal(true);
@@ -55,41 +55,27 @@ const PanapassPage = () => {
           direction="row"
           justifyContent="center"
         >
-          <ButtonGroup
-            disableElevation
-            variant="outlined"
-            aria-label="Disabled elevation buttons"
+          <Button
+            className="btn-info"
+            onClick={() => {
+              processMatch(false);
+            }}
+            endIcon={<JoinRightIcon />}
+            variant="contained"
+            sx={{ mr: 2 }}
           >
-            <Button
-              className="btn-info"
-              onClick={() => {
-                onSubmit();
-              }}
-              endIcon={<UploadFileIcon />}
-            >
-              Subir Archivos ENA
-            </Button>
-
-            <Button
-              className="btn-info"
-              onClick={() => {
-                processMatch(false);
-              }}
-              endIcon={<JoinRightIcon />}
-            >
-              Reporte MatchPanapass
-            </Button>
-
-            <Button
-              className="btn-info"
-              onClick={() => {
-                processMatch(true);
-              }}
-              endIcon={<SaveAltIcon />}
-            >
-              Reporte Rollover
-            </Button>
-          </ButtonGroup>
+            Reporte MatchPanapass
+          </Button>
+          <Button
+            className="btn-info"
+            onClick={() => {
+              processMatch(true);
+            }}
+            endIcon={<SaveAltIcon />}
+            variant="contained"
+          >
+            Reporte Rollover
+          </Button>
         </Grid>
 
         <Grid container direction="row" justifyContent="center">

@@ -10,11 +10,11 @@ const HomePage = () => {
       subTitle="Bienvenidos a KURUMA"
     >
       <Card>
-        <CardMedia
+        {/*<CardMedia
           component="img"
           image="src/assets/logos-pcr-all.png"
           alt="Logo"
-        />
+        />*/}
       </Card>
     </ContainerComponents>
   );

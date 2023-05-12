@@ -10,18 +10,16 @@ export const panapass = () => {
 
   const { messageError, messageSuccess } = messages()
 
-  const uploadFiles = async () => {
+ /* const uploadFiles = async () => {
     try {
-      const resul = await configApi.get("/clear-tables");
 
-      const { status } = resul.data;
+      await configApi.get("/clear-tables");
+      const result = await configApi.get("/process-ena");
+
+      const { status } = result.data;
 
       if (status.id == 200) {
-        const resUploadFiles = await configApi.post("/upload-files");
-
-        if (resUploadFiles.data.status.id == 200) {
-          processENA();
-        }
+        await configApi.get("/process-tb-rentWork");
       } else {
         messageError(status.name)
       }
@@ -70,10 +68,17 @@ export const panapass = () => {
         dispatch(clearErrorMessage());
       }, 10);
     }
-  };
+  };*/
 
   const processMatchPanapass = async (flagRollover) => {
     try {
+
+      await configApi.get("/clear-tables");
+
+      await configApi.get("/process-ena");
+
+      await configApi.get("/process-tb-rentWork");
+
       const result = await configApi.get("/process-match-panapass/" + flagRollover);
 
       const { data, status } = result.data;
@@ -142,7 +147,7 @@ export const panapass = () => {
     //* Propiedades
 
     //* Metodos
-    uploadFiles,
+    //uploadFiles,
     processMatchPanapass,
     loadToIntelisis
   };

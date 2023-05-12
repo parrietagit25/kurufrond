@@ -56,10 +56,6 @@ export const commission = () => {
           messageSuccess(status.name);
         } else {
           messageError(status.name);
-
-          setTimeout(() => {
-            window.location.reload(true);
-          }, 1500);
         }
       };
     } catch (error) {
