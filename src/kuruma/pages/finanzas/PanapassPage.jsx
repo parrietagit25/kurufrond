@@ -1,27 +1,20 @@
-import UploadFileIcon from "@mui/icons-material/UploadFile";
 import JoinRightIcon from "@mui/icons-material/JoinRight";
 import SaveAltIcon from "@mui/icons-material/SaveAlt";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { Button, ButtonGroup, Card, CardHeader, Grid } from "@mui/material";
+import { Button, Card, Grid } from "@mui/material";
 
 import { useState } from "react";
 import ContainerComponents from "../../components/ContainerComponents";
 
-import { panapass, messages } from "../../../hooks";
+import { panapass } from "../../../hooks";
 import ProgressModal from "../../components/ProgressModal";
 
 const PanapassPage = () => {
-  const { /*uploadFiles,*/ processMatchPanapass, loadToIntelisis } = panapass();
+  const { processMatchPanapass, loadToIntelisis } = panapass();
 
   const [modal, setModal] = useState(false);
   const [file, setFile] = useState([]);
   const [disabled, setDisabled] = useState(true);
-
-  /*const onSubmit = async () => {
-    setModal(true);
-    await uploadFiles();
-    setModal(false);
-  };*/
 
   const processMatch = async (flagRollover) => {
     setModal(true);
@@ -32,9 +25,17 @@ const PanapassPage = () => {
   const uploadFile = async () => {
     setModal(true);
     await loadToIntelisis(file);
-    setModal(false);
-    setDisabled(true);
+   
+    setTimeout(async () => {
+      setModal(false);
+    }, 5000);
+    
+    clear()
   };
+
+  const clear = () => {
+    setDisabled(true)
+  }
 
   const fileSelected = (event) => {
     setFile(event.target.files[0]);
@@ -98,8 +99,8 @@ const PanapassPage = () => {
                 uploadFile();
               }}
               endIcon={<CloudUploadIcon />}
-              disabled={disabled}
               variant="contained"
+              disabled={disabled}
             >
               Cargar Intelisis
             </Button>

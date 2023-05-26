@@ -202,7 +202,6 @@ function NavBar() {
 
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             <Button
-              component="a"
               className="btn-nav"
               sx={{ my: 2, color: "white", display: "block" }}
             >
