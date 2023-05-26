@@ -168,6 +168,8 @@ const UploadComisionPage = () => {
       return true;
     }
 
+    console.log(amount);
+
     if (
       amount.commission == "" &&
       amount.bonus == "" &&

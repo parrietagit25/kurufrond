@@ -2,7 +2,8 @@ import axios from 'axios'
 import config from "../../config";
 
 const configApi = axios.create({
-    baseURL: config.URL_API_LOCAL
+    //baseURL: config.URL_API_LOCAL
+    baseURL: config.URL_API_SERVE
 })
 
 //Todo: configurar interceptores
