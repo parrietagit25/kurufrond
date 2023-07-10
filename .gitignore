@@ -25,3 +25,4 @@ config.js
 *.sw?
 
 .env
+/.cert

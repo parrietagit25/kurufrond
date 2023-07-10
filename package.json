@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "start": "HTTPS=true SSL_CRT_FILE=./.cert/STAR_grupopcr_com_pa.crt SSL_KEY_FILE=./.cert/STAR_grupopcr_com_pa.ca-bundle",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"

@@ -13,8 +13,6 @@ const PanapassPage = () => {
   const { processMatchPanapass, loadToIntelisis } = panapass();
 
   const [modal, setModal] = useState(false);
-  const [file, setFile] = useState([]);
-  const [disabled, setDisabled] = useState(true);
 
   const processMatch = async (flagRollover) => {
     setModal(true);
@@ -22,24 +20,13 @@ const PanapassPage = () => {
     setModal(false);
   };
 
-  const uploadFile = async () => {
+  const uploadIntelisis = async () => {
     setModal(true);
-    await loadToIntelisis(file);
-   
+    await loadToIntelisis();
+
     setTimeout(async () => {
       setModal(false);
     }, 5000);
-    
-    clear()
-  };
-
-  const clear = () => {
-    setDisabled(true)
-  }
-
-  const fileSelected = (event) => {
-    setFile(event.target.files[0]);
-    setDisabled(false);
   };
 
   return (
@@ -80,27 +67,14 @@ const PanapassPage = () => {
         </Grid>
 
         <Grid container direction="row" justifyContent="center">
-          <Grid item xs={12} sx={{ mb: 4, mt: 1 }}>
-            <input
-              type="file"
-              id="fileUpload"
-              className="input-search"
-              onChange={() => {
-                fileSelected(event);
-              }}
-              accept=".xls,.xlsx"
-            />
-          </Grid>
-
-          <Grid sx={{ mb: 4 }}>
+          <Grid sx={{ mb: 4, mt: 2 }}>
             <Button
               className="btn-info"
               onClick={() => {
-                uploadFile();
+                uploadIntelisis();
               }}
               endIcon={<CloudUploadIcon />}
               variant="contained"
-              disabled={disabled}
             >
               Cargar Intelisis
             </Button>

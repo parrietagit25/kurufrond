@@ -51,28 +51,15 @@ export const panapass = () => {
     }
   };
 
-  const loadToIntelisis = async (file) => {
+  const loadToIntelisis = async () => {
     try {
-      const flag = false;
 
-      const reader = new FileReader();
+      const resul = await configApi.post("/load-to-intelisis/");
 
-      reader.readAsBinaryString(file);
+      resul.data.status.id === 200
+        ? messageSuccess(resul.data.status.name)
+        : messageError(resul.data.status.name);
 
-      reader.onload = async (event) => {
-        let binaryData = event.target?.result;
-        let workbook = read(binaryData, { type: "binary" });
-
-        const data = utils.sheet_to_json(workbook.Sheets["CARGA"]);
-
-        const dataList = JSON.parse(JSON.stringify(data));
-
-        const resul = await configApi.post("/load-to-intelisis/", dataList);
-
-        resul.data.status.id === 200
-          ? messageSuccess(resul.data.status.name)
-          : messageError(resul.data.status.name);
-      };
     } catch (error) {
       dispatch(onLogout(error.code));
       setTimeout(() => {
