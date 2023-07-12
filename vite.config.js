@@ -7,10 +7,10 @@ export default defineConfig({
   build: {
     chunkSizeWarningLimit: 100000000,
   },
-  server: {
+  /*server: {
     https: {
       key: '/etc/ssl/private/1599616341.grupopcr.com.pa.key',
       cert: '/etc/ssl/certs/1599616341.grupopcr.com.pa.crt',
     },
-  },
+  },*/
 })
